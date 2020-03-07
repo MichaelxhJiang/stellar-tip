@@ -8,10 +8,9 @@
     "persistent": false
   },
   "content_scripts": [
-    { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.4.1.js", "scraper.js"] }
+    { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.4.1.js", "youtube.js"], "run_at": "document_end" }
   ],
   "page_action": {
-    "default_icon": "icon-64.png",
     "default_title": "Stellar Tip",
     "default_popup": "popup.html"
   },
@@ -20,6 +19,8 @@
     "declarativeContent",
     "tabs",
     "<all_urls>",
-    "http://127.0.0.1/*"
+    "http://127.0.0.1/*",
+    "webNavigation",
+    "storage"
   ]
 }

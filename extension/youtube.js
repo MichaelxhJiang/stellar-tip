@@ -56,6 +56,7 @@ function addTipButton(channelName, address) {
     $tipButton.click(function() {
       $(this).find(".stellar-tip-dialog").show();
     })
+    tipSubmitListener($tipButton.find("form.stellar-tip-form"))
   }
   else {
     console.log("addTipButton failed, retrying");

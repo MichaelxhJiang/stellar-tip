@@ -40,7 +40,7 @@ function addTipButton (index, element) {
     $tipButton.click(function() {
       $(this).find(".stellar-tip-dialog").show()
     })
-    tipSubmitListener($tipButton.find("form"))
+    tipSubmitListener($tipButton.find("form.stellar-tip-form"))
   })
 }
 

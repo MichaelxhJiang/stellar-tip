@@ -2,7 +2,7 @@ function dialogHTML (receiveName, receiveAddress) {
   return `
 <div class="stellar-tip-dialog" style="display:none;">
 <div class='stellar-tip-dialog-inner'>
-<form class='modal'>
+<form class='modal stellar-tip-form'>
     <header class='header'>
         <div class='card-type'>
             <a class='card'>

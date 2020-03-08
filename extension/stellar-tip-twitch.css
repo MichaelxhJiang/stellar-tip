@@ -1,21 +1,23 @@
 .stellar-tip-button {
-    transform: translateX(5rem);
-    display: flex;
-    align-items: center;
-    border: none;
-    background-color: #00cc66;
-    padding: 10px 16px;
-    margin: 7px;
-    height: 37px;
-  }
-  
-  .stellar-tip-button svg {
-    fill: white;
-  }
-  
-  .stellar-tip-button span {
-    font-size: 14px;
-    font-family: "Roboto Medium", Arial, sans-serif;
-    color: white;
-  }
-  
+  transform: translateX(5rem);
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 4px;
+  background-color: #00cc66;
+  padding: 5px 10px;
+  margin: 0 10px;
+  height: 30px;
+}
+
+.stellar-tip-button svg {
+  fill: white;
+  margin-right: 5px;
+}
+
+.stellar-tip-button span {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Roobert, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+}

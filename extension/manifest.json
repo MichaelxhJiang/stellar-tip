@@ -11,17 +11,17 @@
     {
       "matches": ["https://*.youtube.com/*"],
       "css" : ["stellar-tip-common.css", "stellar-tip-youtube.css"],
-      "js": ["jquery-3.4.1.js", "common.js", "youtube.js"]
+      "js": ["jquery-3.4.1.js", "popper.min.js", "common.js", "youtube.js"]
     },
     {
       "matches": ["https://*.github.com/*/pull/*", "https://*.github.com/*/issues/*"],
       "css" : ["stellar-tip-common.css", "stellar-tip-github.css"],
-      "js": ["jquery-3.4.1.js", "common.js", "github.js"]
+      "js": ["jquery-3.4.1.js", "popper.min.js", "common.js", "github.js"]
     },
     {
       "matches": ["https://*.twitch.tv/*"],
       "css" : ["stellar-tip-common.css", "stellar-tip-twitch.css"],
-      "js": ["jquery-3.4.1.js", "common.js", "twitch.js"]
+      "js": ["jquery-3.4.1.js", "popper.min.js", "common.js", "twitch.js"]
     }
   ],
   "page_action": {

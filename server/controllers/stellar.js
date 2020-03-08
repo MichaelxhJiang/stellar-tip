@@ -1,6 +1,6 @@
 const stellarUri = require('@stellarguard/stellar-uri')
 const stellarSdk = require('stellar-sdk')
-const Transaction = require('../Transaction')
+const Transaction = require('../models/Transaction')
 
 const server = new stellarSdk.Server('https://horizon.stellar.org/')
 const TransactionStellarUri = stellarUri.TransactionStellarUri
@@ -31,28 +31,28 @@ selectAsset = (asset) => {
  */
 createTransactionUri = async (payerPublicKey, payeePublicKey, asset, amount, memoId) => {
     var transaction;
-    
+
     try {
         const account = await server.loadAccount(payerPublicKey)
         const fee = await server.fetchBaseFee()
         const networkPassphrase = stellarSdk.Networks.PUBLIC
-        transaction = new stellarSdk.TransactionBuilder(account, {fee, networkPassphrase})
+        transaction = new stellarSdk.TransactionBuilder(account, { fee, networkPassphrase })
             .addOperation(
                 stellarSdk.Operation.payment({
                     destination: payeePublicKey,
                     asset: selectAsset(asset),
-                    amount: amount  
+                    amount: amount
                 })
             )
             .setTimeout(30)
             .addMemo(stellarSdk.Memo.text(memoId))
             .build();
 
-        const uri = TransactionStellarUri.forTransaction(transaction); 
+        const uri = TransactionStellarUri.forTransaction(transaction);
         return uri.toString()
     } catch (err) {
         console.log(err)
-        return 'error::' + err
+        return err
     }
 }
 
@@ -64,60 +64,58 @@ createTransactionUri = async (payerPublicKey, payeePublicKey, asset, amount, mem
 getTransactionHistory = async (payerPublicKey) => {
     var transactionHistory = []
 
-    server.transactions()
+    var page = await server.transactions()
         .forAccount(payerPublicKey)
         .call()
-        .then(async function (page) {
-            while (page.records.length) {
-                var records = page.records
 
-                for (var i = 0; i < records.length; i++) {
-                    try {
-                        var operations = await records[i].operations()
-                        var operation = operations.records[0]
+    while (page.records.length) {
+        records = page.records
+        for (var i = 0; i < records.length; i++) {
+            try {
+                var operations = await records[i].operations()
+                var operation = operations.records[0]
+                if (operation.type !== 'payment') continue;
 
-                        if (operation.type !== 'payment') continue;
+                var transaction = await operation.transaction()
+                if (!transaction.memo) continue;
 
-                        var transaction = await operation.transaction()
+                var payer = operation.from;
+                var payee = operation.to;
+                var amount = operation.amount;
+                var asset = operation.asset_type == 'native' ? 'XLM' : operation.asset_code;
+                var memo = transaction.memo;
+                var createdAt = transaction.created_at;
 
-                        var payer = operation.from;
-                        var payee = operation.to;
-                        var amount = operation.amount;
-                        var asset = operation.asset_type == 'native' ? 'XLM' : operation.asset_code;
-                        var memo = transaction.memo;
-                        var createdAt = transaction.created_at;
+                var memoID = memo + payer.substring(payer.length - 8) + payee.substring(payee.length - 8);
 
-                        var key = memo + payer.substring(payer.length - 8) + payee.substring(payee.length - 8);
-                        console.log("GENERATED KEY::", key);
-                        
-                        transactionQuery = Transaction.findOne({key});
-                        
-                        if (transaction) {
-                            transactionObject = {
-                                'payerAlias': transactionQuery.sender,
-                                'payerPublicKey': payer,
-                                'payeeName': transactionQuery.receiver,
-                                'payeePublicKey': payee,
-                                'url': transactionQuery.url,
-                                'amount': amount,
-                                'asset': asset,
-                                'createdAt': createdAt
-                            }
-                            transactionHistory.push(transactionObject)
-                        }
-                    } catch (err) {
-                        console.log(err)
-                        return 'error::' + err
-                    }
+                transactionItem = Transaction.findOne({memoID});
+                transactionItem = {
+                    'sender': 'Mufeez',
+                    'receiver': 'Michael',
+                    'url': 'youtube.com/zeefumd'
                 }
-                page = await page.next();
-            }
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
 
-    return transactionHistory
+                if (transactionItem) {
+                    transactionObject = {
+                        'payerAlias': transactionItem.sender,
+                        'payerPublicKey': payer,
+                        'payeeName': transactionItem.receiver,
+                        'payeePublicKey': payee,
+                        'url': transactionItem.url,
+                        'amount': amount,
+                        'asset': asset,
+                        'createdAt': createdAt
+                    }
+                    transactionHistory.push(transactionObject)
+                }
+            } catch (err) {
+                console.log(err)
+                return err
+            }
+        }
+        page = await page.next();
+    }
+    return transactionHistory;
 }
 
 module.exports = {

@@ -8,7 +8,7 @@ router.get('/address', async(req, res) => {
     const data = req.query;
     const { username, domain } = data;
     const creator = await Creator.findOne({ username }) || {};
-    if (creator) {
+    if (creator && creator.username) {
         const { address } = creator;
         if (address) return res.json(address);
         return res.sendStatus(404);

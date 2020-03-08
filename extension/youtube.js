@@ -11,14 +11,13 @@ const buttonHTML = `
 function checkChannel() {
   var url = window.location.href
   if (!url.includes("youtube.com/watch?v=")) {
-    // TODO(ethan): should we do retries here?
     return
   }
   var channel = $('#meta-contents #channel-name #text a')
   var channelURL = channel.attr("href")
   var channelName = channel.text()
   if (!channelURL) {
-    // TODO(ethan): should we do retries here?
+    setTimeout(checkChannel, 500);
     return
   }
   var channelTokens = channelURL.split("/")
@@ -79,7 +78,7 @@ function addTipButton(channelName, address) {
 
 document.onreadystatechange = function() {
   if (document.readyState === 'complete') {
-    checkChannel()
+    checkChannel();
   }
 }
 

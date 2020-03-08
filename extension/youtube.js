@@ -9,6 +9,7 @@ const buttonHTML = `
 `
 
 function checkChannel() {
+  const url = window.location.href;
   if (!url.includes("youtube.com/watch?v=")) {
     return
   }

@@ -3,7 +3,7 @@
 const buttonHTML = `
 <button class="stellar-tip-button follow-btn__follow-notify-container__align-right" onclick="">
   ${stellarSVG}
-  <span>&nbsp;Tip</span>
+  <span>Tip</span>
   ${dialogHTML}
 </button>
 `

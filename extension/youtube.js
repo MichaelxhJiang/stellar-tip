@@ -1,12 +1,14 @@
 "use strict";
 
-const buttonHTML = `
+function buttonHTML (receiveName, receiveAddress) {
+  return `
 <button class="stellar-tip-button" onclick="">
   ${stellarSVG}
   <span>Tip</span>
-  ${dialogHTML}
+  ${dialogHTML(receiveName, receiveAddress)}
 </button>
 `
+}
 
 var oldURL;
 var invalidateOldURL = true;
@@ -28,8 +30,7 @@ function checkChannel() {
   var channelTokens = channelURL.split("/")
   var channelID = channelTokens[channelTokens.length - 1]
 
-  creatorAddress('youtube', channelID).done(function(data, status, res) {
-    var address = data.address
+  creatorAddress('youtube', channelID).done(function(address, status, res) {
     addTipButton(channelName, address)
   })
 }
@@ -59,7 +60,7 @@ function addTipButton(channelName, address) {
   }
   console.log("trying to addTipButton");
 
-  $('#meta-contents #subscribe-button').before(buttonHTML);
+  $('#meta-contents #subscribe-button').before(buttonHTML(channelName, address));
 
   $tipButton = $('.stellar-tip-button'); // This line is necessary dont delete it
 

@@ -1,4 +1,5 @@
-const dialogHTML = `
+function dialogHTML (receiveName, receiveAddress) {
+  return `
 <div class="stellar-tip-dialog" style="display:none;">
 <div class='stellar-tip-dialog-inner'>
 <form class='modal'>
@@ -20,6 +21,8 @@ const dialogHTML = `
     </header>
     <div class='content'>
         <div class='form'>
+            <input name="receive-name" type="hidden" value="${receiveName}">
+            <input name="receive-address" type="hidden" value="${receiveAddress}">
             <div class='form-row'>
                 <div class='input-group'>
                     <label for=''>Alias</label>
@@ -52,6 +55,7 @@ const dialogHTML = `
 </div>
 </div>
 `
+}
 
 const stellarSVG = `
 <svg class="octicon" viewBox="0 0 400 338" version="1.1" width="16" height="16" aria-hidden="true">

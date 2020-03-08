@@ -1,21 +1,14 @@
 $(function() {
     chrome.storage.sync.get(['publicKey'], function(result) {
         var publicKey = result.publicKey
+        getTransactions(publicKey)
         popupContent(publicKey)
     });
 });
 
-function popupContent (publicKey) {
-    var input = document.createElement('input')
-    input.className = "input";
-    $(input).on('input',function(e){
-        publicKey = e.target.value
-        chrome.storage.sync.set({publicKey});
-        return
-    });
-    input.value = publicKey
-    
-    document.getElementById("publicKey").appendChild(input);
+function getTransactions(publicKey) {
+    $('#transactionList').empty()
+
     var settings = {
         "url": "https://stellar-tip.herokuapp.com/transactions/history",
         "method": "GET",
@@ -32,7 +25,6 @@ function popupContent (publicKey) {
         document.getElementById('transactionList').appendChild(ul);
         transactions.forEach(transaction => {
             var li = document.createElement('li');
-            var msg = transaction.payerAlias + " paid " + transaction.payeeName + " " + transaction.amount + " " + transaction.asset
             var date = new Date(transaction.createdAt)
             date = date.toDateString()
             var url = transaction.url 
@@ -66,5 +58,19 @@ function popupContent (publicKey) {
     }).fail(function(res, status, err) {
         console.error(err)
     })
-    }
+}
+};
+
+function popupContent (publicKey) {
+    var input = document.createElement('input')
+    input.className = "input";
+
+    $(input).on('input',function(e){
+        publicKey = e.target.value
+        chrome.storage.sync.set({publicKey});
+        getTransactions(publicKey);
+    });
+    input.value = publicKey
+    
+    document.getElementById("publicKey").appendChild(input);
 }

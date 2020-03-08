@@ -13,10 +13,11 @@ const select = (html, selector) => {
     return $(selector);
 }
 
-const findReceiver = async (url) => {
+const findToken = async (url) => {
     const client_html = await fetchURL(url);
     const domain = url.match('\/\/(.[^\/]+)')[1]
     const domainName = domain.split('.')[1]
+    let token = "";
     switch (domainName) {
         case 'youtube':
             const link = select(client_html, '.yt-user-info a').attr('href');
@@ -24,10 +25,12 @@ const findReceiver = async (url) => {
             const about_html = await fetchURL(about_url);
             const description = select(about_html, '.about-description pre').text();
             const address = description.match(STELLAR_REGEX)[0]
+            token = address;
             break;
         default:
             console.log(domainName);
     }
+    return token;
 }
 
-module.exports = findReceiver;
+module.exports = findToken;

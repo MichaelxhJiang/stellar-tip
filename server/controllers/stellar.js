@@ -49,6 +49,8 @@ const createTransactionUri = async (payerPublicKey, payeePublicKey, asset, amoun
             .build();
 
         const uri = TransactionStellarUri.forTransaction(transaction);
+        uri.originDomain = process.env.ORIGIN_DOMAIN
+        uri.addSignature(stellarSdk.Keypair.fromSecret(process.env.STELLAR_PRIVATE_KEY))
         return uri.toString()
     } catch (err) {
         console.log(err)

@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const transactions = require('./routes/api/transactions');
 const creators = require('./routes/api/creators');
+const wellknown = require('./routes/api/well-known');
 
 const app = express();
 
@@ -23,6 +24,7 @@ mongoose
 
 app.use('/transactions', transactions)
 app.use('/creators', creators)
+app.use('/.well-known', wellknown)
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

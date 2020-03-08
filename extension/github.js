@@ -2,6 +2,8 @@
 
 document.onreadystatechange = function () {
   if (document.readyState === 'complete') {
+    getPublicKey()
+
     addAllTipButtons()
 
     $('.file-header').click(function() {

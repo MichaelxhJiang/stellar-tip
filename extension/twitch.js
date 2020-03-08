@@ -59,6 +59,8 @@ function addTipButton (channel, address) {
 
 document.onreadystatechange = function () {
   if (document.readyState === 'complete') {
+    getPublicKey();
+
     getChannelName();
 
     if (lastScheduled) clearTimeout(lastScheduled);

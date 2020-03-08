@@ -1,51 +1,55 @@
+var publicKey = undefined
+
 function dialogHTML (receiveName, receiveAddress, additional="") {
+  var publicKeyField
+  if (publicKey) {
+     publicKeyField = `<input name="send-address" type="hidden" value="${publicKey}"></input>`
+  } else {
+    publicKeyField = `
+    <div class='form-row' send-address>
+        <div class='input-group'>
+            <label for=''>My Stellar Address</label>
+            <input name="send-address" maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='text'>
+        </div>
+    </div>`
+  }
   return `
 <div class="stellar-tip-dialog" role="tooltip" ${additional}>
 <form class='modal stellar-tip-form'>
-    <header class='header'>
-        <div class='card-type'>
-            <a class='card'>
-                <b>XLM</b>
-            </a>
-            <a class='card active'>
-              <b>USD</b>
-            </a>
-            <a class='card'>
-              <b>EUR</b>
-            </a>
-            <a class='card'>
-              <b>CAD</b>
-            </a>
-        </div>
-    </header>
     <div class='content'>
         <div class='form'>
             <input name="receive-name" type="hidden" value="${receiveName}">
             <input name="receive-address" type="hidden" value="${receiveAddress}">
+            ${publicKeyField}
             <div class='form-row'>
                 <div class='input-group'>
-                    <label for=''>Alias</label>
+                    <label for=''>Display Name</label>
                     <input name="send-name" placeholder='' type='text'>
                 </div>
             </div>
             <div class='form-row'>
-                <div class='input-group'>
-                    <label for=''>Public Address</label>
-                    <input name="send-address" maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='text'>
-                </div>
-            </div>
-            <div class='form-row'>
-                <div class='input-group'>
-                    <label for=''>Message</label>
-                    <input name="message" placeholder='' type='text'>
-                </div>
                 <div class='input-group'>
                     <label for=''>Amount</label>
                     <input name="amount" placeholder='' type='number' min='0' step='0.01'>
                 </div>
             </div>
         </div>
-        
+    </div>
+    <div class='header'>
+        <div class='card-type'>
+            <a class='card' tabindex="0">
+                <b>XLM</b>
+            </a>
+            <a class='card active' tabindex="0">
+                <b>USD</b>
+            </a>
+            <a class='card' tabindex="0">
+                <b>EUR</b>
+            </a>
+            <a class='card' tabindex="0">
+                <b>CAD</b>
+            </a>
+        </div>
     </div>
     <div class="footer">
       <input type="submit" class='button stellar-tip-dialog-submit' value="Send Tip">
@@ -125,4 +129,18 @@ function tipSubmitListener (tipForm) {
       "url":window.location.href
     })
   })
+}
+
+function getPublicKey () {
+  if (document.readyState === 'complete') {
+    chrome.storage.sync.get(['publicKey'], function(result) {
+        publicKey = result.publicKey
+        if (publicKey) {
+            $(".stellar-tip-dialog.send-address").remove()
+            $(".stellar-tip-dialog.form").prepend(`
+                <input name="send-address" type="hidden" value="${publicKey}">
+            `)
+        }
+    })
+  }
 }

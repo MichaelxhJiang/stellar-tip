@@ -1,0 +1,64 @@
+html {
+    border-radius: 100px
+}
+
+body {
+    width: 300px;
+    height: 500px;
+    border-radius: 100px;
+    background-color: rgb(218, 215, 215);
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+}
+
+.transactionList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.transaction {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    padding: 0px 10px;
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+}
+
+.right, .left .column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right {
+    text-align: right;
+    padding: 10px;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.asset {
+
+}

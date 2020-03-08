@@ -24,7 +24,7 @@
       "js": ["jquery-3.4.1.js", "common.js", "twitch.js"]
     }
   ],
-  "page_action": {
+  "browser_action": {
     "default_title": "Stellar Tip",
     "default_popup": "popup.html"
   },

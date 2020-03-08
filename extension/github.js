@@ -19,6 +19,10 @@ function addTipButton (index, element) {
   if ($tipButton.length) return
 
   var username = $(element).parent().find(".author").text()
+  // don't self tip
+  // var currentUser = $('meta[name="user-login"]').attr('content')
+  // if (currentUser == username) return
+
   creatorAddress('github', username).done(function(data, status, res) {
     var $tipButton = $(element).prepend(`
     <details class="github-stellar-tip-button details-overlay details-reset position-relative d-inline-block">

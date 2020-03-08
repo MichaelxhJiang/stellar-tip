@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/history', async (req, res) => {
-    const data = req.body
+    const data = req.params
     const { payerPublicKey } = data
     try {
         var transactionHistory = await getTransactionHistory(payerPublicKey)

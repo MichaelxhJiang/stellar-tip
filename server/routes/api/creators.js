@@ -5,7 +5,7 @@ const Creator = require('../../models/Creator');
 const findAddress = require('../../controllers/findAddress');
 
 router.get('/address', async (req, res) => {
-    const data = req.body;
+    const data = req.params;
     const { username, url } = data;
     const { address } = await Creator.findOne({username}) || {};
     const domain = url.match('\/\/(.[^\/]+)')[1].split('.')[1];

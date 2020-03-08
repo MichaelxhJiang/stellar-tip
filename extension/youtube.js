@@ -38,20 +38,6 @@ function checkChannel() {
 function addTipButton(channelName, address) {
   var $tipButton = $('.stellar-tip-button');
 
-  // sendTip({
-  //   "sender": {
-  //     "alias":"yo",
-  //     "payer":"TODO"
-  //   },
-  //   "receiver":{
-  //     "name":channelName,
-  //     "payee":address,
-  //   },
-  //   "asset":"USD",
-  //   "amount":"0.5",
-  //   "url":window.location.href
-  // })
-
   if ($tipButton.length) {
     console.log("found existing tip button, will reassign receiver");
     $tipButton.find(".stellar-tip-dialog").hide();

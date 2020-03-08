@@ -26,30 +26,30 @@ function dialogHTML (receiveName, receiveAddress) {
             <div class='form-row'>
                 <div class='input-group'>
                     <label for=''>Alias</label>
-                    <input placeholder='' type='text'>
+                    <input name="send-name" placeholder='' type='text'>
                 </div>
             </div>
             <div class='form-row'>
                 <div class='input-group'>
                     <label for=''>Public Address</label>
-                    <input maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='number'>
+                    <input name="send-address" maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='text'>
                 </div>
             </div>
             <div class='form-row'>
                 <div class='input-group'>
                     <label for=''>Message</label>
-                    <input placeholder='' type='text'>
+                    <input name="message" placeholder='' type='text'>
                 </div>
                 <div class='input-group'>
                     <label for=''>Amount</label>
-                    <input placeholder='' type='number'>
+                    <input name="amount" placeholder='' type='number' min='0' step='0.01'>
                 </div>
             </div>
         </div>
         
     </div>
     <div class="footer">
-      <a class='button'>Send Tip</a>
+      <input type="submit" class='button stellar-tip-dialog-submit' value="Send Tip">
     </div>
 </form>
 </div>
@@ -98,4 +98,28 @@ function sendTip(payload) {
     }).fail(function(res, status, err) {
         console.error(err)
     })
+}
+
+function tipSubmitListener (tipForm) {
+  tipForm.submit(function(event) {
+    event.preventDefault()
+    var data = $(this).serializeArray().reduce(function(obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+
+    sendTip({
+      "sender": {
+        "alias":data["send-name"],
+        "payer":data["send-address"]
+      },
+      "receiver":{
+        "name":data["receive-name"],
+        "payee":data["receive-address"],
+      },
+      "asset":"USD",
+      "amount":data["amount"],
+      "url":window.location.href
+    })
+  })
 }

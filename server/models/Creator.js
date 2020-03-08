@@ -12,13 +12,9 @@ const CreatorSchema = new Schema({
     },
     address: {
         type: String,
-        required: true
     }
 })
 
-CreatorSchema.index(
-    { domain: 1, username: 1 },
-    { unique: true }
-);
+CreatorSchema.index({ domain: 1, username: 1 }, { unique: true });
 
 module.exports = mongoose.model('creators', CreatorSchema)

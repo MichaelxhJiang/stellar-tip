@@ -50,39 +50,39 @@ const stellarSVG = `
 </svg>
 `
 
-function creatorAddress (domain, username) {
-  var settings = {
-    "url": "https://stellar-tip.herokuapp.com/creators/address",
-    "method": "GET",
-    "timeout": 0,
-    "data": {
-      "domain": domain,
-      "username": username
-    }
-  };
+function creatorAddress(domain, username) {
+    var settings = {
+        "url": "https://stellar-tip.herokuapp.com/creators/address",
+        "method": "GET",
+        "timeout": 0,
+        "data": {
+            "domain": domain,
+            "username": username
+        }
+    };
 
-  return $.ajax(settings).fail(function(res, status, err) {
-    if (res.status === 404) {
-      return
-    }
-    console.error(err)
-  })
+    return $.ajax(settings).fail(function(res, status, err) {
+        if (res.status === 404) {
+            return
+        }
+        console.error(err)
+    })
 }
 
 function sendTip(payload) {
-  var settings = {
-    "url": "https://stellar-tip.herokuapp.com/transactions",
-    "method": "POST",
-    "timeout": 0,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": JSON.stringify(payload)
-  };
-  
-  $.ajax(settings).done(function (uri) {
-    window.open(uri,'_blank')
-  }).fail(function(res, status, err) {
-    console.error(err)
-  })
+    var settings = {
+        "url": "https://stellar-tip.herokuapp.com/transactions",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify(payload)
+    };
+
+    $.ajax(settings).done(function(uri) {
+        window.open(uri, '_blank')
+    }).fail(function(res, status, err) {
+        console.error(err)
+    })
 }

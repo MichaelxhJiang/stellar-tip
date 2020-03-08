@@ -4,16 +4,16 @@ function dialogHTML (receiveName, receiveAddress, additional="") {
 <form class='modal'>
     <header class='header'>
         <div class='card-type'>
-            <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
+            <a class='card'>
                 <b>XLM</b>
             </a>
-            <a class='card active' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
+            <a class='card active'>
               <b>USD</b>
             </a>
-            <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
+            <a class='card'>
               <b>EUR</b>
             </a>
-            <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
+            <a class='card'>
               <b>CAD</b>
             </a>
         </div>
@@ -99,12 +99,17 @@ function sendTip(payload) {
 }
 
 function tipSubmitListener (tipForm) {
+  tipForm.find(".card").click(function() {
+    $(this).parent().find(".active").removeClass('active')
+    $(this).addClass('active')
+  })
   tipForm.submit(function(event) {
     event.preventDefault()
     var data = $(this).serializeArray().reduce(function(obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
+    var asset = $(this).find(".card.active b").text()
 
     sendTip({
       "sender": {
@@ -115,7 +120,7 @@ function tipSubmitListener (tipForm) {
         "name":data["receive-name"],
         "payee":data["receive-address"],
       },
-      "asset":"USD",
+      "asset":asset,
       "amount":data["amount"],
       "url":window.location.href
     })

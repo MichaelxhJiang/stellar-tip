@@ -14,7 +14,7 @@ const TransactionSchema = new Schema({
         required: true
     },
     memoID: { //UID+payer8+payee8
-        type: Number,
+        type: String,
         required: true
     },
     date: {

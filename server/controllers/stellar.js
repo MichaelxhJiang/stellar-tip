@@ -29,7 +29,7 @@ selectAsset = (asset) => {
  * amount: string("0.10", "10")
  * memoId: string
  */
-createTransactionUri = async (payerPublicKey, payeePublicKey, asset, amount, memoId) => {
+const createTransactionUri = async (payerPublicKey, payeePublicKey, asset, amount, memoId = "test") => {
     var transaction;
 
     try {
@@ -61,14 +61,15 @@ createTransactionUri = async (payerPublicKey, payeePublicKey, asset, amount, mem
  * 
  * payerPublicKey: string
  */
-getTransactionHistory = async (payerPublicKey) => {
+const getTransactionHistory = async (payerPublicKey) => {
+
     var transactionHistory = []
 
     var page = await server.transactions()
         .forAccount(payerPublicKey)
         .call()
 
-    while (page.records.length) {
+    while (page && page.records && page.records.length) {
         records = page.records
         for (var i = 0; i < records.length; i++) {
             try {
@@ -119,6 +120,6 @@ getTransactionHistory = async (payerPublicKey) => {
 }
 
 module.exports = {
-    createTransactionUri,
-    getTransactionHistory
+    uri: createTransactionUri,
+    history: getTransactionHistory
 }

@@ -16,7 +16,9 @@ function checkChannel() {
     // TODO(ethan): should we do retries here?
     return
   }
-  var channelURL = $('#meta-contents #channel-name #text a').attr("href");;
+  var channel = $('#meta-contents #channel-name #text a')
+  var channelURL = channel.attr("href")
+  var channelName = channel.text()
   if (!channelURL) {
     // TODO(ethan): should we do retries here?
     return
@@ -26,7 +28,7 @@ function checkChannel() {
 
   creatorAddress(url, channelID).done(function(data, status, res) {
     var address = data.address
-    addTipButton(address)
+    addTipButton(channelName, address)
   }).fail(function(res, status, err) {
     if (res.status === 404) {
       return
@@ -35,8 +37,22 @@ function checkChannel() {
   })
 }
 
-function addTipButton(address) {
+function addTipButton(channelName, address) {
   var $tipButton = $('.stellar-tip-button');
+
+  // sendTip({
+  //   "sender": {
+  //     "alias":"yo",
+  //     "payer":"TODO"
+  //   },
+  //   "receiver":{
+  //     "name":channelName,
+  //     "payee":address,
+  //   },
+  //   "asset":"USD",
+  //   "amount":"0.5",
+  //   "url":window.location.href
+  // })
 
   if ($tipButton.length) {
     console.log("found existing tip button, will reassign receiver");

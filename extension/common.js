@@ -57,3 +57,21 @@ function creatorAddress (url, username) {
 
   return $.ajax(settings)
 }
+
+function sendTip(payload) {
+  var settings = {
+    "url": "https://stellar-tip.herokuapp.com/transactions",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify(payload)
+  };
+  
+  $.ajax(settings).done(function (uri) {
+    window.open(uri,'_blank')
+  }).fail(function(res, status, err) {
+    console.error(err)
+  })
+}

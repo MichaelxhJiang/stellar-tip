@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const axios = require('axios')
 const cheerio = require('cheerio')
 
@@ -14,10 +16,16 @@ const select = (html, selector) => {
 }
 
 const getYouTube = async (username) => {
-    let about_url = `https://www.youtube.com/${username}/about`;
-    const about_html = await fetchURL(about_url);
-    const description = select(about_html, '.about-description pre').text();
-    const match = description.match(STELLAR_REGEX)
+    const resp  = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
+        params: {
+            part: "snippet",
+            forUsername: username,
+            key: process.env.YOUTUBE_API_KEY
+        }
+    }) 
+    const { items } = resp.data || {};
+    const { snippet } = items[0]
+    const match = snippet.description.match(STELLAR_REGEX)
     if (match) return match[0]
     return null;
 }
@@ -34,6 +42,7 @@ const findAddress = async (url, username) => {
     switch (domain) {
         case 'youtube':
             address = await getYouTube(username);
+            break;
         case 'github':
             address = await getGitHub(username);
             break;

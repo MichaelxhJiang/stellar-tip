@@ -1,0 +1,20 @@
+.stellar-tip-button {
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: #00cc66;
+    padding: 10px 16px;
+    margin: 7px;
+    height: 37px;
+  }
+  
+  .stellar-tip-button svg {
+    fill: white;
+  }
+  
+  .stellar-tip-button span {
+    font-size: 14px;
+    font-family: "Roboto Medium", Arial, sans-serif;
+    color: white;
+  }
+  

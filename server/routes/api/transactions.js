@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/history', async (req, res) => {
-    const data = req.params
+    const data = req.query
     const { payerPublicKey } = data
     try {
         var transactionHistory = await stellar.history(payerPublicKey)

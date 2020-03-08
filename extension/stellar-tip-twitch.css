@@ -1,4 +1,5 @@
 .stellar-tip-button {
+    transform: translateX(5rem);
     display: flex;
     align-items: center;
     border: none;

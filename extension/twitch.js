@@ -42,6 +42,7 @@ function addTipButton (channel, address) {
     $tipButton.click(function() {
       $(document.body).append(dialogHTML(channel, address))
       $(".stellar-tip-dialog").show();
+      tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
 
       var btn = $('.stellar-tip-button')[0];
       var dlg = $('.stellar-tip-dialog')[0];
@@ -49,7 +50,6 @@ function addTipButton (channel, address) {
         placement: 'bottom',
       });
     })
-    tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
   }
   else {
     console.log("addTipButton failed, retrying");

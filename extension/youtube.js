@@ -62,7 +62,7 @@ function addTipButton(channelName, address) {
         placement: 'bottom',
       });
     })
-    tipSubmitListener($tipButton.find("form.stellar-tip-form"))
+    tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
   }
   else {
     console.log("addTipButton failed, retrying");

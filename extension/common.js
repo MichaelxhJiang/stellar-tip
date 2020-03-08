@@ -1,7 +1,7 @@
 function dialogHTML (receiveName, receiveAddress, additional="") {
   return `
 <div class="stellar-tip-dialog" role="tooltip" ${additional}>
-<form class='modal'>
+<form class='modal stellar-tip-form'>
     <header class='header'>
         <div class='card-type'>
             <a class='card'>

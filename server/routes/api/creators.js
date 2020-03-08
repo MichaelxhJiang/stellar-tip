@@ -2,24 +2,23 @@ const express = require('express')
 const router = express.Router()
 
 const Creator = require('../../models/Creator');
-const findToken = require('../../controllers/cheerio');
+const findAddress = require('../../controllers/findAddress');
 
-router.get('/token', async (req, res) => {
+router.get('/address', async (req, res) => {
     const data = req.body;
-    const { username, url } = data;
-    const { token } = await Creator.findOne({username}) || {};
-    if (!token) {
-        const foundToken = await findToken(url);
-        const domain = url.match('\/\/(.[^\/]+)')[1].split('.')[1];
+    const { username } = data;
+    const { address } = await Creator.findOne({username}) || {};
+    if (!address) {
+        foundAddress = findAddress(username)
         await Creator.create({
             username,
             domain,
-            token: foundToken
+            address: foundAddress
         })
-        return res.json({token: foundToken})
+        return res.json({address: foundAddress})
     }
     else {
-        return res.json({token})
+        return res.json({address})
     }
 });
 

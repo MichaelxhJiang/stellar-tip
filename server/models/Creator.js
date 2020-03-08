@@ -10,7 +10,7 @@ const CreatorSchema = new Schema({
         type: String,
         required: true
     },
-    token: {
+    address: {
         type: String,
         required: true
     }

@@ -24,11 +24,11 @@ const regexAddress = (text) => {
     return null;
 }
 
-const getYouTube = async (username) => {
+const getYouTube = async (id) => {
     const resp  = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
         params: {
             part: "snippet",
-            forUsername: username,
+            id,
             key: process.env.YOUTUBE_API_KEY
         }
     }) 

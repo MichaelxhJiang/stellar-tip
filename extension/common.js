@@ -50,34 +50,6 @@ const stellarSVG = `
 </svg>
 `
 
-function updateTipButton() {
-  var $tipButton = $('.stellar-tip-button');
-
-  if ($tipButton.length) {
-    console.log("found existing tip button, will reassign receiver");
-    $tipButton.find(".stellar-tip-dialog").hide();
-    //todo: have to reassign receiver stellar address in dialog
-    return;
-  }
-  console.log("trying to addTipButton");
-
-  tryAddTipButton();
-
-  $tipButton = $('.stellar-tip-button'); // This line is necessary dont delete it
-
-  if ($tipButton.length) {
-    console.log("addTipButton succeeded");
-
-    $tipButton.click(function() {
-      $(this).find(".stellar-tip-dialog").show();
-    })
-  }
-  else {
-    console.log("addTipButton failed, retrying");
-    setTimeout(updateTipButton, 500);
-  }
-};
-
 function creatorAddress (domain, username) {
   var settings = {
     "url": "https://stellar-tip.herokuapp.com/creators/address",

@@ -43,3 +43,17 @@ const dialogHTML = `
   </div>
 </div>
 `
+
+function creatorAddress (url, username) {
+  var settings = {
+    "url": "https://stellar-tip.herokuapp.com/creators/address",
+    "method": "GET",
+    "timeout": 0,
+    "data": {
+      "url": url,
+      "username": username
+    }
+  };
+
+  return $.ajax(settings)
+}

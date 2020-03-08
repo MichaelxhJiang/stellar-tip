@@ -10,7 +10,32 @@ const buttonHTML = `
 </button>
 `
 
-function addTipButton() {
+function checkChannel() {
+  var url = window.location.href
+  if (!url.includes("youtube.com/watch?v=")) {
+    // TODO(ethan): should we do retries here?
+    return
+  }
+  var channelURL = $('#meta-contents #channel-name #text a').attr("href");;
+  if (!channelURL) {
+    // TODO(ethan): should we do retries here?
+    return
+  }
+  var channelTokens = channelURL.split("/")
+  var channelID = channelTokens[channelTokens.length - 1]
+
+  creatorAddress(url, channelID).done(function(data, status, res) {
+    var address = data.address
+    addTipButton(address)
+  }).fail(function(res, status, err) {
+    if (res.status === 404) {
+      return
+    }
+    console.error(err)
+  })
+}
+
+function addTipButton(address) {
   var $tipButton = $('.stellar-tip-button');
 
   if ($tipButton.length) {
@@ -40,10 +65,10 @@ function addTipButton() {
 
 document.onreadystatechange = function () {
   if (document.readyState === 'complete') {
-    addTipButton()
+    checkChannel()
   }
 }
 
 document.body.addEventListener("yt-navigate-finish", function(event) {
-  addTipButton();
+  checkChannel();
 });

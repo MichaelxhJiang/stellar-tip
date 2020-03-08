@@ -41,6 +41,11 @@ function addTipButton (channel, address) {
     console.log("addTipButton succeeded");
 
     $tipButton.click(function() {
+      if ($('.stellar-tip-dialog').css("display") !== "none") {
+        $(".stellar-tip-dialog").hide();
+        return;
+      }
+
       $(".stellar-tip-dialog").show();
       tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
 
@@ -74,6 +79,7 @@ function checkURLChanged() {
     
     // url has changed!
     $('.stellar-tip-button').remove();
+    $(".stellar-tip-dialog").remove();
     getChannelName();
   }
   lastScheduled = setTimeout(checkURLChanged, 100);

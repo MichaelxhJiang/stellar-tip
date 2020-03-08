@@ -54,6 +54,11 @@ function addTipButton(channelName, address) {
     console.log("addTipButton succeeded");
 
     $tipButton.click(function() {
+      if ($('.stellar-tip-dialog').css("display") !== "none") {
+        $(".stellar-tip-dialog").hide();
+        return;
+      }
+
       $(".stellar-tip-dialog").show();
 
       var btn = $('.stellar-tip-button')[0];
@@ -72,13 +77,13 @@ function addTipButton(channelName, address) {
 
 document.onreadystatechange = function() {
   if (document.readyState === 'complete') {
-    getPublicKey();
     checkChannel();
   }
 }
 
 document.body.addEventListener("yt-navigate-start", function(event) {
   $('.stellar-tip-button').remove();
+  $(".stellar-tip-dialog").remove();
 });
 
 document.body.addEventListener("yt-navigate-finish", function(event) {

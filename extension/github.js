@@ -46,6 +46,17 @@ function addTipButton (index, element) {
     });
 
     $tipButton.click(function() {
+      if ($(`#stellar-tip-dialog-${index}`).css("display") !== "none") {
+        $(`#stellar-tip-dialog-${index}`).hide();
+        return;
+      }
+      
+      $(".stellar-tip-dialog").each((i, e) => {
+        if (e.id !== `#stellar-tip-dialog-${index}`) {
+          $(e).hide();
+        }
+      });
+
       $(`#stellar-tip-dialog-${index}`).show()
     })
     tipSubmitListener($(`#stellar-tip-dialog-${index} form.stellar-tip-form`))

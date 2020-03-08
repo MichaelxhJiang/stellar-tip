@@ -12,10 +12,6 @@ const PAYEE_PUBLIC_KEY = 'GCQI3DMK45VCECJLFYIFYMMSQ3DPR3XPLJVDTBQYP7IH7MSCF7V3TF
 
 const USD_ASSET = new stellar_sdk.Asset('USD', 'GDUKMGUGDZQK6YHYA5Z6AY2G4XDSZPSZ3SW5UN3ARVMO6QSRDWP5YLEX');
 const NATIVE_ASSET = stellar_sdk.Asset.native()
-/**
- * TODO:
- *  - asset selection
- */
 
 extractTransactionFromUri = async () => {
     /**
@@ -33,11 +29,8 @@ extractTransactionFromUri = async () => {
 }
 
 createTransactionUri = async () => {
-    console.log("start of main")
-    
     /**
      * CREATE A TRANSACTION OBJECT AND CONVERT TO URI
-     * NOTE: This requires a secret key for signature (not sure if we need this in the uri?)
      */
     var transaction;
     
@@ -51,7 +44,7 @@ createTransactionUri = async () => {
                 stellar_sdk.Operation.payment({
                     destination: PAYEE_PUBLIC_KEY,
                     asset: USD_ASSET,
-                    amount: "0.10"
+                    amount: "0.10"  
                 })
             )
             .setTimeout(30)
@@ -85,21 +78,22 @@ getAccountHistory = async () => {
 
                         if (operation.type !== 'payment') continue;
 
-                        var transaction = await operation.transaction()
 
-                        console.log("OPERATION::", operation)
+                        var transaction = await operation.transaction()
 
                         var payer = operation.from;
                         var payee = operation.to;
                         var amount = operation.amount;
-                        var asset = operation.asset_code ? operation.asset_code : operation.asset_type;
+                        var asset = operation.asset_type == 'native' ? 'XLM' : operation.asset_code;
                         var memo = transaction.memo;
+                        var createdAt = transaction.created_at
 
                         console.log("PAYER::", payer);
                         console.log("PAYEE::", payee);
                         console.log("AMOUNT::", amount);
                         console.log("MEMO::", memo);
-                        console.log("ASSET::", asset)
+                        console.log("ASSET::", asset);
+                        console.log("CREATED_AT::", createdAt)
                     } catch (err) {
                         console.log("ERROR")
                         console.log(err)

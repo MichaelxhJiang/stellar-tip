@@ -15,6 +15,10 @@
     {
       "matches": ["https://*.github.com/*/pull/*", "https://*.github.com/*/issues/*"],
       "js": ["jquery-3.4.1.js", "github.js"]
+    },
+    {
+      "matches": ["https://*.twitch.tv/*"],
+      "js": ["jquery-3.4.1.js", "twitch.js"]
     }
   ],
   "page_action": {

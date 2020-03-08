@@ -22,6 +22,3 @@ function addTipButton () {
     `)
   });
 };
-
-// document.body.addEventListener("yt-navigate-finish", function(event) {
-// });

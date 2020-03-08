@@ -8,7 +8,14 @@
     "persistent": false
   },
   "content_scripts": [
-    { "matches": ["http://*/*", "https://*/*"], "js": ["jquery-3.4.1.js", "youtube.js"], "run_at": "document_end" }
+    {
+      "matches": ["https://*.youtube.com/watch*"],
+      "js": ["jquery-3.4.1.js", "youtube.js"]
+    },
+    {
+      "matches": ["https://*.github.com/*/pull/*", "https://*.github.com/*/issues/*"],
+      "js": ["jquery-3.4.1.js", "github.js"]
+    }
   ],
   "page_action": {
     "default_title": "Stellar Tip",

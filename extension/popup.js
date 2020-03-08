@@ -6,7 +6,7 @@ $(function() {
     });
 });
 
-function getTransactions(publicKey) {
+function getTransactions(publicKey = "") {
     $('#transactionList').empty()
 
     var settings = {

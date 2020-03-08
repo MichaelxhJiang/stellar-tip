@@ -2,30 +2,19 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TransactionSchema = new Schema({
-    sender: {
+    sender: { //alias
         type: String,
     },
-    receiver: {
-        type: String,
-        required: true
-    },
-    url: {
+    receiver: { //username
         type: String,
         required: true
     },
-    isAnon: {
-        type: Boolean,
-    },
-    transactionId: {
+    url: { //where you paid
         type: String,
         required: true
     },
-    amount: {
+    memoID: { //UID+payer8+payee8
         type: Number,
-        required: true
-    },
-    token: {
-        type: String,
         required: true
     },
     date: {

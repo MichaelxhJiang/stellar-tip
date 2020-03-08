@@ -72,7 +72,6 @@ const findAddress = async (url, username) => {
         default:
             break;
     }
-    console.log(address)
     return address;
 }
 

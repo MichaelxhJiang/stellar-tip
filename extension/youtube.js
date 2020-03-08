@@ -9,7 +9,6 @@ const buttonHTML = `
 `
 
 function checkChannel() {
-  var url = window.location.href
   if (!url.includes("youtube.com/watch?v=")) {
     return
   }
@@ -23,14 +22,9 @@ function checkChannel() {
   var channelTokens = channelURL.split("/")
   var channelID = channelTokens[channelTokens.length - 1]
 
-  creatorAddress(url, channelID).done(function(data, status, res) {
+  creatorAddress('youtube', channelID).done(function(data, status, res) {
     var address = data.address
     addTipButton(channelName, address)
-  }).fail(function(res, status, err) {
-    if (res.status === 404) {
-      return
-    }
-    console.error(err)
   })
 }
 

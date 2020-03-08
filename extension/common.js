@@ -78,18 +78,23 @@ function updateTipButton() {
   }
 };
 
-function creatorAddress (url, username) {
+function creatorAddress (domain, username) {
   var settings = {
     "url": "https://stellar-tip.herokuapp.com/creators/address",
     "method": "GET",
     "timeout": 0,
     "data": {
-      "url": url,
+      "domain": domain,
       "username": username
     }
   };
 
-  return $.ajax(settings)
+  return $.ajax(settings).fail(function(res, status, err) {
+    if (res.status === 404) {
+      return
+    }
+    console.error(err)
+  })
 }
 
 function sendTip(payload) {

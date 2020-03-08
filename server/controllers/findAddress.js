@@ -56,9 +56,8 @@ const getTwitch = async (username) => {
     return regexAddress(description)
 }
 
-const findAddress = async (url, username) => {
-    const domain = url.match('\/\/(.[^\/]+)')[1].split('.')[1];
-    let address = null;
+const findAddress = async (domain, username) => {
+    let address = null
     switch (domain) {
         case 'youtube':
             address = await getYouTube(username);

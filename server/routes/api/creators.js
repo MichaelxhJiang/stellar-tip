@@ -6,11 +6,10 @@ const findAddress = require('../../controllers/findAddress');
 
 router.get('/address', async (req, res) => {
     const data = req.query;
-    const { username, url } = data;
+    const { username, domain } = data;
     const { address } = await Creator.findOne({username}) || {};
-    const domain = url.match('\/\/(.[^\/]+)')[1].split('.')[1];
     if (!address) {
-        foundAddress = await findAddress(url, username)
+        foundAddress = await findAddress(domain, username)
         if (foundAddress) {
             await Creator.create({
                 username,

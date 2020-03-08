@@ -19,7 +19,7 @@ router.get('/address', async (req, res) => {
             })
             return res.json({address: foundAddress})
         }
-        return res.sendStatus(400)
+        return res.sendStatus(404)
     }
     else {
         return res.json({address})

@@ -52,26 +52,35 @@ const buttonHTML = `
 
 function addTipButton() {
   if ($('.stellar-tip-button').length) {
+    console.log("found existing tip button, will reassign receiver");
     // will have to reassign receiver stellar address in dialog
     return;
   }
+  console.log("trying to addTipButton");
 
   $('#meta-contents #subscribe-button').before(buttonHTML);
 
   var $tipButton = $('.stellar-tip-button');
 
   if ($tipButton.length) {
+    console.log("addTipButton succeeded");
+
     $tipButton.click(function() {
       $(this).find(".stellar-tip-dialog").show();
     })
   }
   else {
+    console.log("addTipButton failed, retrying");
     setTimeout(addTipButton, 500);
   }
 };
 
-document.addEventListener("load", addTipButton);
+document.onreadystatechange = function () {
+  if (document.readyState === 'complete') {
+    addTipButton()
+  }
+}
 
 document.body.addEventListener("yt-navigate-finish", function(event) {
-    addTipButton();
+  addTipButton();
 });

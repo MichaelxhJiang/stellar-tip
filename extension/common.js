@@ -1,4 +1,18 @@
+var publicKey = undefined
+
 function dialogHTML (receiveName, receiveAddress, additional="") {
+  var publicKeyField
+  if (publicKey) {
+     publicKeyField = `<input name="send-address" type="hidden" value="${publicKey}"></input>`
+  } else {
+    publicKeyField = `<div class='form-row send-address'>
+    <div class='input-group'>
+        <label for=''>Public Address</label>
+        <input name="send-address" maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='text'>
+    </div>
+</div>`
+
+  }
   return `
 <div class="stellar-tip-dialog" role="tooltip" ${additional}>
 <form class='modal stellar-tip-form'>
@@ -28,12 +42,7 @@ function dialogHTML (receiveName, receiveAddress, additional="") {
                     <input name="send-name" placeholder='' type='text'>
                 </div>
             </div>
-            <div class='form-row'>
-                <div class='input-group'>
-                    <label for=''>Public Address</label>
-                    <input name="send-address" maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='text'>
-                </div>
-            </div>
+            ${publicKeyField}
             <div class='form-row'>
                 <div class='input-group'>
                     <label for=''>Message</label>
@@ -125,4 +134,18 @@ function tipSubmitListener (tipForm) {
       "url":window.location.href
     })
   })
+}
+
+function getPublicKey () {
+  if (document.readyState === 'complete') {
+    chrome.storage.sync.get(['publicKey'], function(result) {
+        publicKey = result.publicKey
+        if (publicKey) {
+            $(".stellar-tip-dialog.send-address").remove()
+            $(".stellar-tip-dialog.form").prepend(`
+                <input name="send-address" type="hidden" value="${publicKey}">
+            `)
+        }
+    })
+  }
 }

@@ -72,6 +72,7 @@ function addTipButton(channelName, address) {
 
 document.onreadystatechange = function() {
   if (document.readyState === 'complete') {
+    getPublicKey();
     checkChannel();
   }
 }

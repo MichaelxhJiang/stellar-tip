@@ -8,16 +8,31 @@ const buttonHTML = `
 </button>
 `
 
-function tryAddTipButton () {
+function getChannelName() {
+  var path = window.location.pathname
+  var channel = path.substring(1)
+
+  creatorAddress('twitch', channel).done(function(data, status, res) {
+    var address = data.address
+    addTipButton()
+  }).fail(function(res, status, err) {
+    if (res.status === 404) {
+      return
+    }
+    console.error(err)
+  })
+}
+
+function addTipButton () {
   $('.channel-header__right').before(buttonHTML)
 };
 
 document.onreadystatechange = function () {
   if (document.readyState === 'complete') {
-    updateTipButton()
+    getChannelName()
   }
 }
 
-window.addEventListener('locationchange', function() {
-  updateTipButton()
+window.addEventListener('load', function() {
+  getChannelName()
 });

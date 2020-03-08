@@ -33,6 +33,7 @@ function addTipButton (channel, address) {
   console.log("trying to addTipButton");
 
   $('.channel-header__right').before(buttonHTML(channel, address))
+  $(document.body).append(dialogHTML(channel, address))
 
   $tipButton = $('.stellar-tip-button'); // This line is necessary dont delete it
 
@@ -40,7 +41,6 @@ function addTipButton (channel, address) {
     console.log("addTipButton succeeded");
 
     $tipButton.click(function() {
-      $(document.body).append(dialogHTML(channel, address))
       $(".stellar-tip-dialog").show();
       tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
 

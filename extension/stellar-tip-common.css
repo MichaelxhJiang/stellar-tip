@@ -18,6 +18,7 @@
   background: #f2f2f2;
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -71,7 +72,6 @@
   margin: 0 0 8px;
   text-align: left;
   font-size: 14px;
-  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -87,7 +87,6 @@
   padding: 10px;
   color: #444;
   font-size: 14px;
-  font-weight: 700;
   box-sizing: border-box;
 }
 
@@ -120,12 +119,13 @@
   transition: 0.3s ease;
 }
 
+.modal .header .card-type .card div,
 .modal .header .card-type .card b {
   text-decoration: none !important;
 }
 
-.modal .header .card-type .card b:hover,
-.modal .header .card-type .card b:focus {
+.modal .header .card-type .card div:hover {
+  text-decoration: none !important;
   color: #00cc66;
 }
 
@@ -144,8 +144,8 @@
 .modal .header .card-type .card:last-of-type.active {
   color: white;
   background-color: #00cc66;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 
@@ -185,7 +185,6 @@
   padding: 20px 30px;
   margin: 30px;
   color: #FFF;
-  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;

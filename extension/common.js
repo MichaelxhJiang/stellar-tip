@@ -37,18 +37,18 @@ function dialogHTML (receiveName, receiveAddress, additional="") {
     </div>
     <div class='header'>
         <div class='card-type'>
-            <a class='card' tabindex="0">
+            <div class='card' tabindex="0">
                 <b>XLM</b>
-            </a>
-            <a class='card active' tabindex="0">
+            </div>
+            <div class='card active' tabindex="0">
                 <b>USD</b>
-            </a>
-            <a class='card' tabindex="0">
+            </div>
+            <div class='card' tabindex="0">
                 <b>EUR</b>
-            </a>
-            <a class='card' tabindex="0">
+            </div>
+            <div class='card' tabindex="0">
                 <b>CAD</b>
-            </a>
+            </div>
         </div>
     </div>
     <div class="footer">

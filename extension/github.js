@@ -22,8 +22,8 @@ function addTipButton (index, element) {
 
   var username = $(element).parent().find(".author").text()
   // don't self tip
-  // var currentUser = $('meta[name="user-login"]').attr('content')
-  // if (currentUser == username) return
+  var currentUser = $('meta[name="user-login"]').attr('content')
+  if (currentUser == username) return
 
   creatorAddress('github', username).done(function(address, status, res) {
     var $tipButton = $(element).prepend(`

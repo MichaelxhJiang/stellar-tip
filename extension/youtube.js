@@ -1,49 +1,42 @@
 "use strict";
 
-const buttonHTML = `
+function buttonHTML (receiveName, receiveAddress) {
+  return `
 <button class="stellar-tip-button" onclick="">
   ${stellarSVG}
-  <span>&nbsp;Tip</span>
-  ${dialogHTML}
+  <span>Tip</span>
+  ${dialogHTML(receiveName, receiveAddress)}
 </button>
 `
+}
+
+var oldURL;
+var invalidateOldURL = true;
 
 function checkChannel() {
+  const url = window.location.href;
   if (!url.includes("youtube.com/watch?v=")) {
     return
   }
   var channel = $('#meta-contents #channel-name #text a')
   var channelURL = channel.attr("href")
   var channelName = channel.text()
-  if (!channelURL) {
+  if (!channelURL || (invalidateOldURL && channelURL === oldURL)) {
     setTimeout(checkChannel, 500);
     return
   }
+  invalidateOldURL = false;
+  oldURL = channelURL;
   var channelTokens = channelURL.split("/")
   var channelID = channelTokens[channelTokens.length - 1]
 
-  creatorAddress('youtube', channelID).done(function(data, status, res) {
-    var address = data.address
+  creatorAddress('youtube', channelID).done(function(address, status, res) {
     addTipButton(channelName, address)
   })
 }
 
 function addTipButton(channelName, address) {
   var $tipButton = $('.stellar-tip-button');
-
-  // sendTip({
-  //   "sender": {
-  //     "alias":"yo",
-  //     "payer":"TODO"
-  //   },
-  //   "receiver":{
-  //     "name":channelName,
-  //     "payee":address,
-  //   },
-  //   "asset":"USD",
-  //   "amount":"0.5",
-  //   "url":window.location.href
-  // })
 
   if ($tipButton.length) {
     console.log("found existing tip button, will reassign receiver");
@@ -53,7 +46,7 @@ function addTipButton(channelName, address) {
   }
   console.log("trying to addTipButton");
 
-  $('#meta-contents #subscribe-button').before(buttonHTML);
+  $('#meta-contents #subscribe-button').before(buttonHTML(channelName, address));
 
   $tipButton = $('.stellar-tip-button'); // This line is necessary dont delete it
 
@@ -76,6 +69,11 @@ document.onreadystatechange = function() {
   }
 }
 
+document.body.addEventListener("yt-navigate-start", function(event) {
+  $('.stellar-tip-button').remove();
+});
+
 document.body.addEventListener("yt-navigate-finish", function(event) {
+  invalidateOldURL = true;
   checkChannel();
 });

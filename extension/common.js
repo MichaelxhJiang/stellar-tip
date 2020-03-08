@@ -1,48 +1,61 @@
-const dialogHTML = `
+function dialogHTML (receiveName, receiveAddress) {
+  return `
 <div class="stellar-tip-dialog" style="display:none;">
-  <div class=stellar-tip-dialog-inner>
-    <form>
-    <table>
-      <tr>
-      <td>
-        <label for="display_name">Display name&nbsp;</label>
-      </td>
-      <td>
-        <input type="text" name="display_name" style="width: 12em;" />
-      </td>
-      </tr>
-      <tr>
-      <td>
-        <label for="message">Message&nbsp;</label>
-      </td>
-      <td>
-        <input type="text" name="message" placeholder="(optional)" style="width: 12em;" />
-      </td>
-      </tr>
-      <tr>
-      <td>
-        <label for="amount">Amount&nbsp;</label>
-      </td>
-      <td>
-        <input type="text" name="amount" style="width:7.75em;" />
-        <select name="asset" style="width:4em;">
-        <option value="XLM">XLM</option>
-        <option value="USD">USD</option>
-        <option value="USD">CAD</option>
-        <option value="USD">EUR</option>
-        </select>
-      </td>
-      </tr>
-      <tr>
-      <td colspan="2">
-        <button>Send Tip</button>
-      </td>
-      </tr>
-    </table>
-    </form>
-  </div>
+<div class='stellar-tip-dialog-inner'>
+<form class='modal'>
+    <header class='header'>
+        <div class='card-type'>
+            <a class='card'>
+                <b>XLM</b>
+            </a>
+            <a class='card active'>
+              <b>USD</b>
+            </a>
+            <a class='card'>
+              <b>EUR</b>
+            </a>
+            <a class='card'>
+              <b>CAD</b>
+            </a>
+        </div>
+    </header>
+    <div class='content'>
+        <div class='form'>
+            <input name="receive-name" type="hidden" value="${receiveName}">
+            <input name="receive-address" type="hidden" value="${receiveAddress}">
+            <div class='form-row'>
+                <div class='input-group'>
+                    <label for=''>Alias</label>
+                    <input name="send-name" placeholder='' type='text'>
+                </div>
+            </div>
+            <div class='form-row'>
+                <div class='input-group'>
+                    <label for=''>Public Address</label>
+                    <input name="send-address" maxlength='56' placeholder='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' type='text'>
+                </div>
+            </div>
+            <div class='form-row'>
+                <div class='input-group'>
+                    <label for=''>Message</label>
+                    <input name="message" placeholder='' type='text'>
+                </div>
+                <div class='input-group'>
+                    <label for=''>Amount</label>
+                    <input name="amount" placeholder='' type='number' min='0' step='0.01'>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="footer">
+      <input type="submit" class='button stellar-tip-dialog-submit' value="Send Tip">
+    </div>
+</form>
+</div>
 </div>
 `
+}
 
 const stellarSVG = `
 <svg class="octicon" viewBox="0 0 400 338" version="1.1" width="16" height="16" aria-hidden="true">
@@ -50,39 +63,63 @@ const stellarSVG = `
 </svg>
 `
 
-function creatorAddress (domain, username) {
-  var settings = {
-    "url": "https://stellar-tip.herokuapp.com/creators/address",
-    "method": "GET",
-    "timeout": 0,
-    "data": {
-      "domain": domain,
-      "username": username
-    }
-  };
+function creatorAddress(domain, username) {
+    var settings = {
+        "url": "https://stellar-tip.herokuapp.com/creators/address",
+        "method": "GET",
+        "timeout": 0,
+        "data": {
+            "domain": domain,
+            "username": username
+        }
+    };
 
-  return $.ajax(settings).fail(function(res, status, err) {
-    if (res.status === 404) {
-      return
-    }
-    console.error(err)
-  })
+    return $.ajax(settings).fail(function(res, status, err) {
+        if (res.status === 404) {
+            return
+        }
+        console.error(err)
+    })
 }
 
 function sendTip(payload) {
-  var settings = {
-    "url": "https://stellar-tip.herokuapp.com/transactions",
-    "method": "POST",
-    "timeout": 0,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": JSON.stringify(payload)
-  };
-  
-  $.ajax(settings).done(function (uri) {
-    window.open(uri,'_blank')
-  }).fail(function(res, status, err) {
-    console.error(err)
+    var settings = {
+        "url": "https://stellar-tip.herokuapp.com/transactions",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify(payload)
+    };
+
+    $.ajax(settings).done(function(uri) {
+        window.open(uri, '_blank')
+    }).fail(function(res, status, err) {
+        console.error(err)
+    })
+}
+
+function tipSubmitListener (tipForm) {
+  tipForm.submit(function(event) {
+    event.preventDefault()
+    var data = $(this).serializeArray().reduce(function(obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+
+    sendTip({
+      "sender": {
+        "alias":data["send-name"],
+        "payer":data["send-address"]
+      },
+      "receiver":{
+        "name":data["receive-name"],
+        "payee":data["receive-address"],
+      },
+      "asset":"USD",
+      "amount":data["amount"],
+      "url":window.location.href
+    })
   })
 }

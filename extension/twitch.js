@@ -1,12 +1,14 @@
 "use strict";
 
-const buttonHTML = `
+function buttonHTML (requestName, requestAddress) {
+  return `
 <button class="stellar-tip-button follow-btn__follow-notify-container__align-right" onclick="">
   ${stellarSVG}
   <span>Tip</span>
-  ${dialogHTML}
 </button>
+${dialogHTML(requestName, requestAddress)}
 `
+}
 
 var oldURL;
 var lastScheduled;
@@ -15,18 +17,12 @@ function getChannelName() {
   var path = window.location.pathname
   var channel = path.substring(1)
 
-  creatorAddress('twitch', channel).done(function(data, status, res) {
-    var address = data.address
-    addTipButton()
-  }).fail(function(res, status, err) {
-    if (res.status === 404) {
-      return
-    }
-    console.error(err)
+  creatorAddress('twitch', channel).done(function(address, status, res) {
+    addTipButton(channel, address)
   })
 }
 
-function addTipButton () {
+function addTipButton (channel, address) {
   var $tipButton = $('.stellar-tip-button');
 
   if ($tipButton.length) {
@@ -37,7 +33,7 @@ function addTipButton () {
   }
   console.log("trying to addTipButton");
 
-  $('.channel-header__right').before(buttonHTML)
+  $('.channel-header__right').before(buttonHTML(channel, address))
 
   $tipButton = $('.stellar-tip-button'); // This line is necessary dont delete it
 
@@ -45,7 +41,13 @@ function addTipButton () {
     console.log("addTipButton succeeded");
 
     $tipButton.click(function() {
-      $(this).find(".stellar-tip-dialog").show();
+      $(".stellar-tip-dialog").show();
+
+      var btn = $('.stellar-tip-button')[0];
+      var dlg = $('.stellar-tip-dialog-inner')[0];
+      Popper.createPopper(btn, dlg, {
+        placement: 'bottom',
+      });
     })
   }
   else {
@@ -67,7 +69,9 @@ function checkURLChanged() {
   if (oldURL !== document.location.href) {
     oldURL = document.location.href;
     
+    // url has changed!
+    $('.stellar-tip-button').remove();
     getChannelName();
   }
-  lastScheduled = setTimeout(checkURLChanged, 200);
+  lastScheduled = setTimeout(checkURLChanged, 100);
 }

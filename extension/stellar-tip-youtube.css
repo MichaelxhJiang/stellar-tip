@@ -1,0 +1,13 @@
+.stellar-tip-button {
+  float: left;
+  display: flex;
+  align-items: center;
+  border: 1px solid #118855;
+  background-color: #22ffaa;
+  padding: 0.5em;
+}
+
+.stellar-tip-button img {
+  height: 2em;
+  margin-right: 0.5em;
+}

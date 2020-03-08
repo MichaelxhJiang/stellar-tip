@@ -1,0 +1,23 @@
+.stellar-tip-dialog {
+  position: relative;
+}
+
+.stellar-tip-dialog-inner {
+  position: absolute;
+  top: 4em;
+  left: 0em;
+  padding: 0.5em;
+  margin-top: 5px;
+  border: 1px solid #118855;
+  color: #333;
+  background: #fff;
+  border-radius: 0.5em;
+}
+
+.stellar-tip-dialog form {
+  display: table;
+}
+
+.stellar-tip-dialog td {
+  text-align: left;
+}

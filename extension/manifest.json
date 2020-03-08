@@ -9,11 +9,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*.youtube.com/watch*"],
+      "matches": ["https://*.youtube.com/*"],
+      "css" : ["stellar-tip-dialog.css", "stellar-tip-youtube.css"],
       "js": ["jquery-3.4.1.js", "youtube.js"]
     },
     {
       "matches": ["https://*.github.com/*/pull/*", "https://*.github.com/*/issues/*"],
+      "css" : ["stellar-tip-dialog.css", "stellar-tip-github.css"],
       "js": ["jquery-3.4.1.js", "github.js"]
     },
     {

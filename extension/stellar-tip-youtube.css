@@ -10,6 +10,7 @@
 
 .stellar-tip-button svg {
   fill: white;
+  margin-right: 6px;
 }
 
 .stellar-tip-button span {

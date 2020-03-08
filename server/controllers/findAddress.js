@@ -15,6 +15,15 @@ const select = (html, selector) => {
     return $(selector);
 }
 
+const regexAddress = (text) => {
+    if (text) {
+        const match = text.match(STELLAR_REGEX)
+        if (match) return match[0]
+    }
+
+    return null;
+}
+
 const getYouTube = async (username) => {
     const resp  = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
         params: {
@@ -25,15 +34,26 @@ const getYouTube = async (username) => {
     }) 
     const { items } = resp.data || {};
     const { snippet } = items[0]
-    const match = snippet.description.match(STELLAR_REGEX)
-    if (match) return match[0]
-    return null;
+    return regexAddress(snippet.description)
 }
 
 const getGitHub = async (username) => {
     const { data } = await axios.get(`https://api.github.com/users/${username}`);
     const { bio } = data || {};
-    return bio && bio.match(STELLAR_REGEX)[0];
+    return regexAddress(bio);
+}
+
+const getTwitch = async (username) => {
+    const { data } = await axios.get(`https://api.twitch.tv/helix/users`, {
+        headers: { 
+            'Client-ID': process.env.TWITCH_ID
+        },
+        params: {
+            login: username
+        }
+    })
+    const { description } = data.data[0] || {}
+    return regexAddress(description)
 }
 
 const findAddress = async (url, username) => {
@@ -46,6 +66,9 @@ const findAddress = async (url, username) => {
         case 'github':
             address = await getGitHub(username);
             break;
+        case 'twitch':
+            address = await getTwitch(username);
+            break;
         default:
             break;
     }
@@ -53,5 +76,7 @@ const findAddress = async (url, username) => {
     return address;
 }
 
-findAddress("https://www.youtube.com/watch?v=XSrwhmU5YyU", "ZeefumD")
+module.exports = findAddress;
+// findAddress("https://www.youtube.com/watch?v=XSrwhmU5YyU", "ZeefumD")
 // findAddress("https://www.github.com/mufeez-amjad", "mufeez-amjad")
+// findAddress("https://www.twitch.tv/settings/profile", "xxravagegunxx")

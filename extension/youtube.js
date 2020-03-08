@@ -3,10 +3,13 @@
 const buttonHTML = `
 <button class="stellar-tip-button" onclick="">
   ${stellarSVG}
-  <span>&nbsp;Tip</span>
+  <span>Tip</span>
   ${dialogHTML}
 </button>
 `
+
+var oldURL;
+var invalidateOldURL = true;
 
 function checkChannel() {
   const url = window.location.href;
@@ -16,10 +19,12 @@ function checkChannel() {
   var channel = $('#meta-contents #channel-name #text a')
   var channelURL = channel.attr("href")
   var channelName = channel.text()
-  if (!channelURL) {
+  if (!channelURL || (invalidateOldURL && channelURL === oldURL)) {
     setTimeout(checkChannel, 500);
     return
   }
+  invalidateOldURL = false;
+  oldURL = channelURL;
   var channelTokens = channelURL.split("/")
   var channelID = channelTokens[channelTokens.length - 1]
 
@@ -77,6 +82,11 @@ document.onreadystatechange = function() {
   }
 }
 
+document.body.addEventListener("yt-navigate-start", function(event) {
+  $('.stellar-tip-button').remove();
+});
+
 document.body.addEventListener("yt-navigate-finish", function(event) {
+  invalidateOldURL = true;
   checkChannel();
 });

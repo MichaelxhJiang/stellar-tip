@@ -18,11 +18,6 @@ function getChannelName() {
   creatorAddress('twitch', channel).done(function(data, status, res) {
     var address = data.address
     addTipButton()
-  }).fail(function(res, status, err) {
-    if (res.status === 404) {
-      return
-    }
-    console.error(err)
   })
 }
 
@@ -67,7 +62,9 @@ function checkURLChanged() {
   if (oldURL !== document.location.href) {
     oldURL = document.location.href;
     
+    // url has changed!
+    $('.stellar-tip-button').remove();
     getChannelName();
   }
-  lastScheduled = setTimeout(checkURLChanged, 200);
+  lastScheduled = setTimeout(checkURLChanged, 100);
 }

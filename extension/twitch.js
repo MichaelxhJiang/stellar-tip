@@ -6,7 +6,6 @@ function buttonHTML (requestName, requestAddress) {
   ${stellarSVG}
   <span>Tip</span>
 </button>
-${dialogHTML(requestName, requestAddress)}
 `
 }
 
@@ -41,10 +40,11 @@ function addTipButton (channel, address) {
     console.log("addTipButton succeeded");
 
     $tipButton.click(function() {
+      $(document.body).append(dialogHTML(channel, address))
       $(".stellar-tip-dialog").show();
 
       var btn = $('.stellar-tip-button')[0];
-      var dlg = $('.stellar-tip-dialog-inner')[0];
+      var dlg = $('.stellar-tip-dialog')[0];
       Popper.createPopper(btn, dlg, {
         placement: 'bottom',
       });

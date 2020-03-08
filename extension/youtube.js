@@ -5,8 +5,8 @@ function buttonHTML (receiveName, receiveAddress) {
 <button class="stellar-tip-button" onclick="">
   ${stellarSVG}
   <span>Tip</span>
-  ${dialogHTML(receiveName, receiveAddress)}
 </button>
+${dialogHTML(receiveName, receiveAddress)}
 `
 }
 
@@ -54,7 +54,13 @@ function addTipButton(channelName, address) {
     console.log("addTipButton succeeded");
 
     $tipButton.click(function() {
-      $(this).find(".stellar-tip-dialog").show();
+      $(".stellar-tip-dialog").show();
+
+      var btn = $('.stellar-tip-button')[0];
+      var dlg = $('.stellar-tip-dialog')[0];
+      Popper.createPopper(btn, dlg, {
+        placement: 'bottom',
+      });
     })
     tipSubmitListener($tipButton.find("form.stellar-tip-form"))
   }

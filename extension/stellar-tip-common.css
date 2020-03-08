@@ -1,18 +1,28 @@
-.stellar-tip-dialog {
-  position: relative;
+.stellar-tip-button {
+  cursor: pointer;
 }
 
-.stellar-tip-dialog-inner {
-  position: absolute;
+.stellar-tip-dialog {
+  display: none;
   z-index: 99999;
   top: 0em;
   left: 0em;
-  padding: 0.5em;
+  /* padding: 0.5em; */
   margin-top: 5px;
   border: 1px solid #118855;
   color: #333;
   background: #fff;
   border-radius: 0.5em;
+  width: 360px;
+  
+  background: #f2f2f2;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1;
+}
+
+.stellar-tip-dialog[data-show] {
+  display: block;
 }
 
 .stellar-tip-dialog form {
@@ -23,18 +33,13 @@
   text-align: left;
 }
 
-body {
+/* body {
   background: #f2f2f2;
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
   line-height: 1;
-}
+} */
 
-.stellar-tip-dialog-inner {
-  display: block;
-  max-width: 480px;
-  margin: 40px auto;
-}
 .modal {
   background: #FFF;
   border-radius: 3px;
@@ -87,17 +92,8 @@ body {
 }
 .modal .header {
   background: #00cc66;
-  padding: 30px;
-  width: 300px;
+  width: 360px;
   text-align: center;
-}
-.modal .header h1 {
-  margin: 0 0 15px;
-  color: #FFF;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 }
 .modal .header .card-type {
   display: flex;
@@ -107,11 +103,16 @@ body {
 .modal .header .card-type .card {
   cursor: pointer;
   position: relative;
+  padding: 24px 0;
   width: 25%;
   min-width: 54px;
   text-align: center;
   transition: 0.3s ease;
   /* background-color: #10af60; */
+}
+
+.modal .header .card-type .card a {
+  text-decoration: none !important;
 }
 
 .modal .header .card-type .card b {
@@ -131,12 +132,12 @@ body {
 }
 .modal .header .card-type .card.active:after {
   display: block;
-  bottom: -30px;
+  bottom: 0px;
 }
 .modal .header .card-type .card:after {
   content: '';
   position: absolute;
-  bottom: -60px;
+  bottom: -15px;
   left: 50%;
   margin: 0 0 0 -10px;
   border-right: 10px solid transparent;
@@ -155,9 +156,10 @@ body {
   padding: 30px;
 }
 .modal .footer .button {
+  display: inline-block;
   outline: none;
   background: #E39C14;
-  width: 100%;
+  width: 250px;
   border: 0;
   padding: 20px 30px;
   margin: 20px;

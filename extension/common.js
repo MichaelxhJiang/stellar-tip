@@ -1,8 +1,7 @@
-function dialogHTML (receiveName, receiveAddress) {
+function dialogHTML (receiveName, receiveAddress, additional="") {
   return `
-<div class="stellar-tip-dialog" style="display:none;">
-<div class='stellar-tip-dialog-inner'>
-<form class='modal stellar-tip-form'>
+<div class="stellar-tip-dialog" role="tooltip" ${additional}>
+<form class='modal'>
     <header class='header'>
         <div class='card-type'>
             <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
@@ -52,7 +51,6 @@ function dialogHTML (receiveName, receiveAddress) {
       <input type="submit" class='button stellar-tip-dialog-submit' value="Send Tip">
     </div>
 </form>
-</div>
 </div>
 `
 }

@@ -96,7 +96,9 @@ function sendTip(payload) {
     };
 
     $.ajax(settings).done(function(uri) {
-        window.open(uri, '_blank')
+        if (uri && typeof uri === 'string') {
+            window.open(uri, '_blank')
+        }
     }).fail(function(res, status, err) {
         console.error(err)
     })

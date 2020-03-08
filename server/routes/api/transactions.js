@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
             memoID,
             url
         })
-        const uri = await stellar.uri(payer, payee, asset, amount, memoID)
+        const uri = await stellar.uri(payer, payee, asset, amount, id)
         return res.status(200).json(uri);
     } catch (err) {
         return res.status(500).json(err);

@@ -89,7 +89,7 @@ const getTransactionHistory = async (payerPublicKey) => {
 
                 var memoID = memo + payer.substring(payer.length - 8) + payee.substring(payee.length - 8);
 
-                transactionItem = Transaction.findOne({memoID});
+                const transactionItem = await Transaction.findOne({memoID});
 
                 if (transactionItem) {
                     transactionObject = {

@@ -5,16 +5,16 @@ function dialogHTML (receiveName, receiveAddress) {
 <form class='modal stellar-tip-form'>
     <header class='header'>
         <div class='card-type'>
-            <a class='card'>
+            <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
                 <b>XLM</b>
             </a>
-            <a class='card active'>
+            <a class='card active' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
               <b>USD</b>
             </a>
-            <a class='card'>
+            <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
               <b>EUR</b>
             </a>
-            <a class='card'>
+            <a class='card' onclick="document.querySelector('.card.active').classList.remove('active');this.classList.add('active')">
               <b>CAD</b>
             </a>
         </div>

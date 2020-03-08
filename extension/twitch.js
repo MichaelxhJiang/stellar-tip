@@ -35,6 +35,8 @@ function addTipButton (channel, address) {
   $('.channel-header__right').before(buttonHTML(channel, address))
   $(document.body).append(dialogHTML(channel, address))
 
+  tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
+
   $tipButton = $('.stellar-tip-button'); // This line is necessary dont delete it
 
   if ($tipButton.length) {
@@ -47,7 +49,6 @@ function addTipButton (channel, address) {
       }
 
       $(".stellar-tip-dialog").show();
-      tipSubmitListener($(".stellar-tip-dialog form.stellar-tip-form"))
 
       var btn = $('.stellar-tip-button')[0];
       var dlg = $('.stellar-tip-dialog')[0];

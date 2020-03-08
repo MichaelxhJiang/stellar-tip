@@ -26,7 +26,7 @@ function addTipButton (index, element) {
   if (currentUser == username) return
 
   creatorAddress('github', username).done(function(address, status, res) {
-    var $tipButton = $(element).prepend(`
+    $(element).prepend(`
     <details id="stellar-tip-button-${index}" class="github-stellar-tip-button details-overlay details-reset position-relative d-inline-block">
       <summary class="btn-link link-gray" aria-label="Tip some stellar" aria-haspopup="menu" role="button" style="display: inline-block; padding: 8px 4px; color: #6a737d;">
         <svg class="octicon octicon-plus-small" style="margin-right: -1px;" viewBox="0 0 7 16" version="1.1" width="7" height="16" aria-hidden="true">
@@ -44,6 +44,7 @@ function addTipButton (index, element) {
     Popper.createPopper(btn, dlg, {
       placement: 'bottom',
     });
+    var $tipButton = $(element).find(`#stellar-tip-button-${index}`)
 
     $tipButton.click(function() {
       if ($(`#stellar-tip-dialog-${index}`).css("display") !== "none") {

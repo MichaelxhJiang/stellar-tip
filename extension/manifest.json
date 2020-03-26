@@ -1,8 +1,13 @@
 {
   "manifest_version": 2,
   "name": "Stellar Tip",
-  "description": "",
-  "version": "1.0",
+  "version": "0.1.0",
+  "description": "Stellar Tip makes it super easy to send and receive tips using the Stellar Network.",
+  "icons": {
+    "16": "stellar-tip-16.png",
+    "48": "stellar-tip-48.png",
+    "128": "stellar-tip-128.png"
+  },
   "content_scripts": [
     {
       "matches": ["https://*.youtube.com/*"],

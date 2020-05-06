@@ -113,7 +113,7 @@ const getTransactionHistory = async (payerPublicKey) => {
         }
         page = await page.next();
     }
-    return transactionHistory;
+    return transactionHistory.reverse();
 }
 
 module.exports = {

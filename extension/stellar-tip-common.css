@@ -1,3 +1,7 @@
+:root {
+  --stellar-tip-primary-color: #45b864;
+}
+
 .stellar-tip-button {
   cursor: pointer;
 }

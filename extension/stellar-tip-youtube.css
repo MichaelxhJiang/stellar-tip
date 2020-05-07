@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   border: none;
-  background-color: #00cc66;
+  background-color: var(--stellar-tip-primary-color);
   padding: 10px 16px;
   margin: 7px;
   height: 37px;
